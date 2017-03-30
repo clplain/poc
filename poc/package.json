@@ -1,15 +1,15 @@
 {
-  "name": "sst",
+  "name": "stccat",
   "version": "1.0.0",
   "description": "react & bootstrap poc",
-  "main": "app.js",
+  "main": "stccat.js",
   "scripts": {
-    "build": "webpack --config webpack-config.js --colors",
+    "build": "webpack --config webpack.config.js --colors",
     "start": "gulp dev-server"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clplain/poc.git"
+    "url": "git+https://alm-github.systems.uk.hsbc/traded-risk-aggreation/stccat-ui.git"
   },
   "keywords": [
     "react",
@@ -55,15 +55,20 @@
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "classnames": "^2.1.2",
+    "rc-tooltip": "^3.4.2",
+    "react-bootstrap-date-picker": "^3.6.0",
+    "react-bootstrap-datetimepicker": "^0.0.22",
     "react-bootstrap-table": "^2.5.0",
     "react-fileupload-progress": "^0.3.2",
+    "react-select": "^1.0.0-rc.2",
+    "react-textarea-autosize": "^4.0.5",
     "react-toastr": "^2.3.1"
   },
   "peerDependencies": {
     "react": "^0.14.3 || ^15.0.0"
   },
   "bugs": {
-    "url": "https://github.com/clplain/poc/issues"
+    "url": "https://alm-github.systems.uk.hsbc/traded-risk-aggreation/stccat-ui/issues"
   },
-  "homepage": "https://github.com/clplain/poc#readme"
+  "homepage": "https://alm-github.systems.uk.hsbc/traded-risk-aggreation/stccat-ui#readme"
 }
