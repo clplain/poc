@@ -41,7 +41,7 @@ module.exports = {
   //new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js') 提取通用代码
   //new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }) 压缩代码
   plugins: [
-	new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
     new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
