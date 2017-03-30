@@ -1,13 +1,41 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <title>poc</title>
+	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Stressed CCAT</title>
+    <link rel="icon" href="./images/hsbc_icon.bmp">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/react-bootstrap-table.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="./css/react-select.css">
 </head>
-<body>
+<body onload="checkSessionStorage();">
+    <table style="background-color: #E0E0E0;" width="100%">
+        <tr>
+            <td>
+                <img src="images/hsbc_logo.png" />
+            </td>
+        </tr>
+    </table>
     <div id="root"></div>
-    <script src="../vendors.js"></script>
-    <script src="../app.bundle.js"></script>
+    <!-- <script src="../../stccat.bundle.js"></script> -->
+    <script src="http://localhost:3006/stccat.bundle.js"></script>
+    <table border=0 cellspacing=0 cellpadding=0 width="90%">
+        <tr>
+            <td align="center">
+                <span style="font-size: xx-small">This page is powered by Global Risk SWD</span>
+            </td>
+        </tr>
+    </table>
+	<script type="text/javascript">
+        function checkSessionStorage(){
+	    var storage = window.sessionStorage;
+	    if(storage.length == 0){
+	        console.log('session invalid logout......');
+		window.location.href = '/batch/logout';
+	    }
+	}
+    </script>
 </body>
 </html>
