@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Stressed CCAT - Login</title>
+    <link rel="icon" href="./images/hsbc_icon.bmp">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/login.css">
+</head>
+<body onload="document.getElementById('j_username').focus();">
+<div class="container">    
+    <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3"> 
+        <div class="row">                
+            <div class="iconmelon">
+              <svg viewBox="0 0 32 32">
+              </svg>
+            </div>
+        </div>
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <div class="panel-title text-left"><img src="./images/hsbc_logo.png"><span style='margin-left:30px;font-size:18px;font-weight: bold;'>Stressed CCAT Login</span></div>
+            </div>     
+
+            <div class="panel-body" >
+                <form name="form" id="form" class="form-horizontal" action="" method="POST">
+					<div class="form-group">
+						<label for="username" class="col-sm-2 control-label">Username</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="j_username" name="j_username" placeholder="Staff ID" required onKeyPress="return searchKeyPress(event);">
+						</div>
+					</div>
+	
+					<div class="form-group">
+						<label for="password" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="j_password" name="j_password" placeholder="Password" required onKeyPress="return searchKeyPress(event);">
+						</div>
+					</div>                                                                
+					<div class="form-group">
+						<div class="panel-title text-center">
+							<input id="btnLogin" type="button" class="btn" value="Login" onClick="login()" />
+						</div>
+						<div class="panel-title text-center"><h3><span id="result" className='label label-danger'></span></h3></div>
+					</div>
+				</form>
+            </div>                     
+        </div>  
+    </div>
+</div>
+<table align="center" border=0 cellspacing=0 cellpadding=0 width="90%">
+    <tr>
+        <td>&nbsp;</td>
+        <td align="center">
+            <span style="font-size: xx-small">This page is powered by Global Risk SWD</span>
+            <br /><br />
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <span align="center" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-small; margin: 0px; padding: 0px;; color: #777777">
+                This is a HSBC BANK plc. owned computer system all programs and data on this system are the property of, or licensed by HSBC Bank plc. It is for authorised use only. Users (authorised or unauthorised) have no explicit or implicit expectation of privacy.  Any or all uses of this system and all files on this system may be intercepted, monitored, recorded, copied, audited, inspected, and disclosed to relevant authorities.  By using this system, the user consents to such interception, monitoring, recording, copying, auditing, inspection, and disclosure at the discretion of HSBC BANK plc. authorised personnel.  Unauthorised or improper use of this system may result in administrative disciplinary action and civil and criminal penalties. By continuing to use this system you indicate your awareness of and consent to these terms and conditions of use. LOG OFF IMMEDIATELY if you do not agree to the conditions stated in this warning.
+            </span>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+
+</table>
+<div id="particles"></div>
+
+<script type="text/javascript">
+function searchKeyPress(event) {
+    event = event || window.event;
+    if (event.keyCode == 13) {
+        if (event.target.id == "j_username") {
+            document.getElementById("j_password").focus();
+        } else if (event.target.id == "j_password") {
+            document.getElementById('btnLogin').click();
+        }
+        return false;
+    }
+    return true;
+}
+function login() {
+	var btnLogin = document.getElementById("btnLogin");
+	btnLogin.disabled = true;
+	
+	var username = document.getElementById("j_username").value;
+	var password = document.getElementById("j_password").value;
+	
+	var resultSpan = document.getElementById("result");
+	resultSpan.innerHTML = "<img src='./images/progressing.gif'>";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/batch/login', true);
+
+    // build form request
+    var request = 'username=' + username + '&password=' + password;
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status == 200) {
+				var json = JSON.parse(xhr.responseText);
+                if (json.isAuthenticated) {
+                    resultSpan.innerHTML = "<img src='./images/correct_icon.png'>";
+                    window.sessionStorage.setItem('staffId', json.staffId);
+                    window.sessionStorage.setItem('userName', json.userName);
+                    window.sessionStorage.setItem('userRoleList', json.userRoleList);
+
+					window.setTimeout(function(){
+				        window.location.href = json.redirectPage;
+				    }, 1000);
+                } else {
+                	resultSpan.textContent = "Failed. " + json.failureReason;
+                }
+            } else {
+            	resultSpan.textContent = "Failed. HTTP status " + xhr.status;
+			}
+            btnLogin.disabled = false;
+        }
+    }
+    // Send the POST request
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(request);
+}
+</script>
+</body>
+</html>
